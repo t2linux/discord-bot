@@ -13,7 +13,8 @@ export class SetRoleCommand extends Command {
                 { key: 'channel', type: 'text-channel', prompt: 'The channel in which the reaction message should be sent' },
                 { key: 'customEmoji', type: 'custom-emoji', prompt: 'The emote that can be reacted with to get the role' },
                 { key: 'role', type: 'role', prompt: 'The role to be given when reacting', default: '!!norole!!' }
-            ]
+            ],
+            ownerOnly: true
         });
     }
 
