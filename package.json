@@ -1,0 +1,16 @@
+{
+    "name": "bot",
+    "version": "1.0.0",
+    "description": "t2linux.org's discord bot",
+    "main": "index.js",
+    "scripts": {
+        "start": "tsc -p tsconfig.json && node index.js"
+    },
+    "author": "networkException",
+    "license": "MIT",
+    "dependencies": {
+        "@types/node": "^14.14.14",
+        "discord.js": "^12.5.1",
+        "discord.js-commando": "^0.10.0"
+    }
+}
