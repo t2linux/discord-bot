@@ -11,6 +11,6 @@
     "dependencies": {
         "@types/node": "^14.14.14",
         "discord.js": "^12.5.1",
-        "discord.js-commando": "^0.10.0"
+        "discord.js-commando": "github:discordjs/discord.js-commando#master"
     }
 }
