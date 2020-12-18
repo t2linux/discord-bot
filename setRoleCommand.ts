@@ -14,7 +14,8 @@ export class SetRoleCommand extends Command {
                 { key: 'customEmoji', type: 'custom-emoji', prompt: 'The emote that can be reacted with to get the role' },
                 { key: 'role', type: 'role', prompt: 'The role to be given when reacting', default: '!!norole!!' }
             ],
-            ownerOnly: true
+            ownerOnly: true,
+            guildOnly: true
         });
     }
 
