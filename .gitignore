@@ -3,6 +3,9 @@
 .vscode
 .history
 
+# config
+config.json
+
 # npm
 node_modules
 package-lock.json
