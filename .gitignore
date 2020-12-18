@@ -5,6 +5,7 @@
 
 # config
 config.json
+data.json
 
 # npm
 node_modules
