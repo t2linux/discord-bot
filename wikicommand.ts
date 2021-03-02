@@ -6,7 +6,7 @@ export class WikiCommand extends Command {
     private static articles: Map<Array<string>, string> = new Map<Array<string>, string>([
         [['wiki', 'index'], 'https://wiki.t2linux.org/'],
         [['wifi'], 'https://wiki.t2linux.org/guides/wifi/'],
-        [['dkms', 'modules'], 'https://wiki.t2linux.org/guides/dkms/'],
+        [['dkms', 'modules', 'drivers'], 'https://wiki.t2linux.org/guides/dkms/'],
         [['windows'], 'https://wiki.t2linux.org/guides/windows/'],
         [['audio'], 'https://wiki.t2linux.org/guides/audio-config/'],
         [['fan'], 'https://wiki.t2linux.org/guides/fan/'],
