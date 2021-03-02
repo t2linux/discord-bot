@@ -1,9 +1,10 @@
 import { Guild, GuildChannel, GuildMember } from 'discord.js';
 import { CommandoClient } from 'discord.js-commando';
 import * as files from 'fs';
-import { Data } from './data';
 import { Config } from './config';
+import { Data } from './data';
 import { SetRoleCommand } from './setRoleCommand';
+import { WikiCommand } from './wikicommand';
 
 const config: Config = JSON.parse(files.readFileSync('config.json').toString());
 const data: Data = new Data();
@@ -12,10 +13,17 @@ const client = new CommandoClient(config.discord.options);
 (async () => {
     await client.login(config.discord.token);
 
+    client.user.setActivity({
+        type: 'WATCHING',
+        name: 'wiki.t2linux.org'
+    });
+
     client.registry
         .registerDefaultTypes()
         .registerGroup('admin', 'Administration commands')
-        .registerCommand(new SetRoleCommand(client, data));
+        .registerGroup('user', 'User commands')
+        .registerCommand(new SetRoleCommand(client, data))
+        .registerCommand(new WikiCommand(client, data));
 
     // requires the use of raw events to get the member 'user_id'
     client.on('raw', async event => {
