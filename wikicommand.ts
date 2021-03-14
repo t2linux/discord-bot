@@ -44,7 +44,7 @@ export class WikiCommand extends Command {
 
             for (const keys of WikiCommand.articles.keys())
                 for (const key of keys)
-                    if (key === name)
+                    if (key.toLowerCase() === name.toLowerCase())
                         found = { name: key, url: WikiCommand.articles.get(keys) };
 
             if (found !== null) return message.channel.send(new MessageEmbed()
