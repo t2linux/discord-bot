@@ -4,8 +4,8 @@
     "description": "t2linux.org's discord bot",
     "main": "index.js",
     "scripts": {
-        "start": "tsc -p tsconfig.json && node index.js",
-        "update": "git pull && tsc -p tsconfig.json"
+        "build": "tsc -p tsconfig.json",
+        "start": "node index.js"
     },
     "author": "networkException",
     "license": "MIT",
