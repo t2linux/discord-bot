@@ -26,6 +26,7 @@ const client = new CommandoClient(config.discord.options);
         .registerCommand(new WikiCommand(client, data));
 
     // requires the use of raw events to get the member 'user_id'
+    // @ts-ignore
     client.on('raw', async event => {
         if (event.t === 'MESSAGE_REACTION_ADD') {
             if (event.d.user_id === client.user.id) return;
