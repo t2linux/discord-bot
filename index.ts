@@ -4,6 +4,7 @@ import * as files from 'fs';
 import { Config } from './config';
 import { Data } from './data';
 import { SetRoleCommand } from './setRoleCommand';
+import { SetRoleDefaultCommand } from './setRoleDefaultCommand';
 import { WikiCommand } from './wikicommand';
 
 const config: Config = JSON.parse(files.readFileSync('config.json').toString());
@@ -23,6 +24,7 @@ const client = new CommandoClient(config.discord.options);
         .registerGroup('admin', 'Administration commands')
         .registerGroup('user', 'User commands')
         .registerCommand(new SetRoleCommand(client, data))
+        .registerCommand(new SetRoleDefaultCommand(client, data))
         .registerCommand(new WikiCommand(client, data));
 
     // requires the use of raw events to get the member 'user_id'
@@ -32,29 +34,47 @@ const client = new CommandoClient(config.discord.options);
             if (event.d.user_id === client.user.id) return;
 
             if (data.hasChannel(event.d.channel_id)) {
-                if (data.hasEmoji(event.d.channel_id, event.d.emoji.id)) {
-                    const guild: Guild = (await client.channels.fetch(event.d.channel_id) as GuildChannel).guild;
-                    const member: GuildMember = await guild.members.fetch(event.d.user_id);
-                    const role: string = data.getRole(event.d.channel_id, event.d.emoji.id);
+                let identifier: string;
 
-                    console.log('Roles: ' + member.user.tag + ' added role ' + role);
+                if (data.hasEmoji(event.d.channel_id, event.d.emoji.id))
+                    identifier = event.d.emoji.id;
 
-                    member.roles.add(role);
-                }
+                if (data.hasEmoji(event.d.channel_id, event.d.emoji.name))
+                    identifier = event.d.emoji.name;
+
+                if (!identifier)
+                    return;
+
+                const guild: Guild = (await client.channels.fetch(event.d.channel_id) as GuildChannel).guild;
+                const member: GuildMember = await guild.members.fetch(event.d.user_id);
+                const role: string = data.getRole(event.d.channel_id, identifier);
+
+                console.log('Roles: ' + member.user.tag + ' added role ' + role);
+
+                member.roles.add(role);
             }
         } else if (event.t === 'MESSAGE_REACTION_REMOVE') {
             if (event.d.user_id === client.user.id) return;
 
             if (data.hasChannel(event.d.channel_id)) {
-                if (data.hasEmoji(event.d.channel_id, event.d.emoji.id)) {
-                    const guild: Guild = (await client.channels.fetch(event.d.channel_id) as GuildChannel).guild;
-                    const member: GuildMember = await guild.members.fetch(event.d.user_id);
-                    const role: string = data.getRole(event.d.channel_id, event.d.emoji.id);
+                let identifier: string;
 
-                    console.log('Roles: ' + member.user.tag + ' removed role ' + role);
+                if (data.hasEmoji(event.d.channel_id, event.d.emoji.id))
+                    identifier = event.d.emoji.id;
 
-                    member.roles.remove(role);
-                }
+                if (data.hasEmoji(event.d.channel_id, event.d.emoji.name))
+                    identifier = event.d.emoji.name;
+
+                if (!identifier)
+                    return;
+
+                const guild: Guild = (await client.channels.fetch(event.d.channel_id) as GuildChannel).guild;
+                const member: GuildMember = await guild.members.fetch(event.d.user_id);
+                const role: string = data.getRole(event.d.channel_id, identifier);
+
+                console.log('Roles: ' + member.user.tag + ' removed role ' + role);
+
+                member.roles.remove(role);
             }
         }
     });
