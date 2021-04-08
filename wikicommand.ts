@@ -12,7 +12,8 @@ export class WikiCommand extends Command {
         [['fan'], 'https://wiki.t2linux.org/guides/fan/'],
         [['arch'], 'https://wiki.t2linux.org/distributions/arch/installation/'],
         [['manjaro'], 'https://wiki.t2linux.org/distributions/manjaro/installation/'],
-        [['ubuntu'], 'https://wiki.t2linux.org/distributions/ubuntu/installation/']
+        [['ubuntu'], 'https://wiki.t2linux.org/distributions/ubuntu/installation/'],
+        [['uninstall'], 'https://wiki.t2linux.org/guides/uninstall/']
     ]);
 
     public constructor(client: CommandoClient, private data: Data) {
