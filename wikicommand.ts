@@ -5,6 +5,7 @@ import { Data } from './data';
 export class WikiCommand extends Command {
     private static articles: Map<Array<string>, string> = new Map<Array<string>, string>([
         [['wiki', 'index'], 'https://wiki.t2linux.org/'],
+        [['roadmap'], 'https://wiki.t2linux.org/roadmap/'],
         [['wifi'], 'https://wiki.t2linux.org/guides/wifi/'],
         [['dkms', 'modules', 'drivers'], 'https://wiki.t2linux.org/guides/dkms/'],
         [['windows'], 'https://wiki.t2linux.org/guides/windows/'],
