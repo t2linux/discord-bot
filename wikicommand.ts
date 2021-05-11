@@ -10,6 +10,7 @@ export class WikiCommand extends Command {
         [['dkms', 'modules', 'drivers'], 'https://wiki.t2linux.org/guides/dkms/'],
         [['windows'], 'https://wiki.t2linux.org/guides/windows/'],
         [['audio'], 'https://wiki.t2linux.org/guides/audio-config/'],
+        [['hybrid graphics', 'igpu'], 'https://wiki.t2linux.org/guides/hybrid-graphics/'],
         [['fan'], 'https://wiki.t2linux.org/guides/fan/'],
         [['arch'], 'https://wiki.t2linux.org/distributions/arch/installation/'],
         [['manjaro'], 'https://wiki.t2linux.org/distributions/manjaro/installation/'],
