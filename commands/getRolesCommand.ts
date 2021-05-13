@@ -28,7 +28,7 @@ export class GetRolesCommand extends Command {
     public async handle(message: Message, args: Array<string>): Promise<void> {
         const [ channelArgument ] = args;
 
-        const channel: Channel = await ChannelArgument.parse(message, channelArgument);
+        const channel: Channel = await ChannelArgument.parse(channelArgument);
 
         if (!data.hasChannel(channel.id))
             throw CommandError.generic('GetRolesCommand', 'The specified channel has no emojis stored');

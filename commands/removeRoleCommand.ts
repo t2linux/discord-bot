@@ -29,7 +29,7 @@ export class RemoveRoleCommand extends Command {
     public async handle(message: Message, args: Array<string>): Promise<void> {
         const [ channelArgument, emojiArgument ] = args;
 
-        const channel: Channel = await ChannelArgument.parse(message, channelArgument);
+        const channel: Channel = await ChannelArgument.parse(channelArgument);
         const emoji: string | Emoji = await EmojiArgument.parse(message, emojiArgument);
 
         const emojiId: string = typeof emoji === 'string' ? emoji : emoji.id;

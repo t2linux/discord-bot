@@ -3,7 +3,7 @@ import { CommandError } from '../commandError';
 
 export class BooleanArgument {
 
-    public static async parse(message: Message, input: string): Promise<boolean> {
+    public static async parse(input: string): Promise<boolean> {
         if (!input)
             throw CommandError.syntax('BooleanArgument', 'No input provided');
 

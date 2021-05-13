@@ -5,7 +5,7 @@ import { SnowflakeBasedArgument } from './base/snowflakeBasedArgument';
 
 export class ChannelArgument extends SnowflakeBasedArgument {
 
-    public static async parse(message: Message, input: string): Promise<Channel> {
+    public static async parse(input: string): Promise<Channel> {
         if (!input)
             throw CommandError.syntax('ChannelArgument', 'No input provided');
 
