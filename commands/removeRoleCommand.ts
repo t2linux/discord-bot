@@ -1,8 +1,8 @@
 import { Channel, Emoji, GuildMember, Message } from 'discord.js';
 import { config, data } from '..';
 import { Argument } from '../argument';
-import { ChannelArgument } from '../argument/channelArgument';
-import { EmojiArgument } from '../argument/emojiArgument';
+import { ChannelArgument } from '../arguments/channelArgument';
+import { EmojiArgument } from '../arguments/emojiArgument';
 import { Command } from '../command';
 
 export class RemoveRoleCommand extends Command {
