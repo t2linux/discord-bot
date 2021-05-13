@@ -9,29 +9,29 @@ export class EmojiArgument extends RegexBasedArgument {
 
     public static async parse(message: Message, input: string, type: EmojiType = 'all'): Promise<string | Emoji> {
         if (!input)
-            throw new ArgumentError('EmojiArgument: No input provided');
+            throw ArgumentError.syntax('EmojiArgument', 'No input provided');
 
         if (emoji.hasEmoji(input)) {
             const withColons: string = emoji.unemojify(input);
 
             if (withColons.split('').filter(character => character === ':').length === 2 && withColons.startsWith(':') && withColons.endsWith(':')) {
                 if (type === 'custom')
-                    throw new ArgumentError(`EmojiArgument: Required type custom but input is of type unicode`);
+                    throw ArgumentError.syntax('EmojiArgument', 'Required type custom but input is of type unicode');
 
                 return withColons;
             } else {
-                throw new ArgumentError(`EmojiArgument: Invalid format (expected unicode emoji, got \`${input.replaceAll('`', '')}\`)`);
+                throw ArgumentError.syntax('EmojiArgument', `Expected unicode emoji but got \`${input.replaceAll('`', '')}\` instead`);
             }
         }
 
         if (type === 'unicode')
-            throw new ArgumentError(`EmojiArgument: Required type ${type} but input does not match`);
+            throw ArgumentError.syntax('EmojiArgument', `Required type ${type} but got \`${input.replaceAll('`', '')}\` instead`);
 
         const match: RegExpMatchArray = this.regex('EmojiArgument', /^<a?:(.*):(\d*)>$/, input);
         const parsed: DeconstructedSnowflake = SnowflakeUtil.deconstruct(match[2]);
 
         if (parsed.timestamp < SnowflakeUtil.EPOCH)
-            throw new ArgumentError(`EmojiArgument: Invalid snowflake`);
+            throw ArgumentError.syntax('EmojiArgument', `Expected snowflake but got ${match[1].replaceAll('`', '')} instead`);
 
         return (await message.guild.fetch()).emojis.resolve(match[2]);
     }

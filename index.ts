@@ -13,7 +13,6 @@ import { Data } from './data';
 export const config: Config = JSON.parse(files.readFileSync('config.json').toString());
 export const data: Data = new Data();
 export const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
-export const primaryColor: string = '#7663E8';
 export const commands: Array<Command> = [
     new SetRoleCommand(),
     new RemoveRoleCommand(),

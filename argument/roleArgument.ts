@@ -6,7 +6,7 @@ export class RoleArgument extends SnowflakeBasedArgument {
 
     public static async parse(message: Message, input: string): Promise<Role> {
         if (!input)
-            throw new ArgumentError('RoleArgument: No input provided');
+            throw ArgumentError.syntax('RoleArgument', 'No input provided');
 
         const { plain } = this.snowflake('RoleArgument', '@&', input);
 

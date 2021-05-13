@@ -7,7 +7,7 @@ export class ChannelArgument extends SnowflakeBasedArgument {
 
     public static async parse(message: Message, input: string): Promise<Channel> {
         if (!input)
-            throw new ArgumentError('ChannelArgument: No input provided');
+            throw ArgumentError.syntax('ChannelArgument', 'No input provided');
 
         const { plain } = this.snowflake('ChannelArgument', '#', input);
 

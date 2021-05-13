@@ -4,12 +4,12 @@ export class RegexBasedArgument {
 
     protected static regex(name: string, pattern: RegExp, input: string): RegExpMatchArray {
         if (!input)
-            console.log(`${name}: No input provided`);
+            throw ArgumentError.syntax(name, 'No input provided');
 
         const match: RegExpMatchArray | null = input.match(pattern);
 
         if (!match)
-            throw new ArgumentError(`${name}: Invalid format (expected \`${pattern}\` but got \`${input.replaceAll('`', '')}\` instead)`);
+            throw ArgumentError.syntax(name, `${name}: Expected \`${pattern}\` but got \`${input.replaceAll('`', '')}\` instead)`);
 
         return match;
     }

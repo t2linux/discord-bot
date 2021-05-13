@@ -1,6 +1,7 @@
 import { GuildMember, Message, MessageEmbed } from 'discord.js';
-import { config, primaryColor } from '.';
+import { config } from '.';
 import { Argument } from './argument';
+import { Color } from './color';
 
 export abstract class Command {
 
@@ -11,7 +12,7 @@ export abstract class Command {
     public help(): MessageEmbed {
         const embed: MessageEmbed = new MessageEmbed()
             .setTitle(config.discord.commandPrefix + this.name())
-            .setColor(primaryColor)
+            .setColor(Color.primary)
             .setDescription(this.description());
 
         for (const argument of this.arguments())

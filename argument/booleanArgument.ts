@@ -5,7 +5,7 @@ export class BooleanArgument {
 
     public static async parse(message: Message, input: string): Promise<boolean> {
         if (!input)
-            throw new ArgumentError('BooleanArgument: No input provided');
+            throw ArgumentError.syntax('BooleanArgument', 'No input provided');
 
         if (input === 'true')
             return true;
@@ -13,6 +13,6 @@ export class BooleanArgument {
         if (input === 'false')
             return false;
 
-        throw new ArgumentError(`BooleanArgument: Invalid format (expected true or false emoji, got \`${input.replaceAll('`', '')}\`)`);
+        throw ArgumentError.syntax('BooleanArgument', `Expected true or false emoji but got \`${input.replaceAll('`', '')}\` instead`);
     }
 }
