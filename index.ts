@@ -5,6 +5,7 @@ import { Command } from './command';
 import { Config } from './config';
 import { Data } from './data';
 import { GetRolesCommand } from './getRolesCommand';
+import { RemoveRoleCommand } from './removeRoleCommand';
 import { SetRoleCommand } from './setRoleCommand';
 import { WikiCommand } from './wikiCommand';
 
@@ -17,6 +18,7 @@ export const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] 
 
     const commands: Array<Command> = [
         new SetRoleCommand(),
+        new RemoveRoleCommand(),
         new GetRolesCommand(),
         new WikiCommand()
     ];
