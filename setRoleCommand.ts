@@ -1,34 +1,35 @@
-import { Emoji, MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { Data } from './data';
+import { Channel, Emoji, GuildMember, Message, Role } from 'discord.js';
+import { config, data } from '.';
+import { ChannelArgument } from './argument/channelArgument';
+import { EmojiArgument } from './argument/emojiArgument';
+import { RoleArgument } from './argument/roleArgument';
+import { Command } from './command';
 
 export class SetRoleCommand extends Command {
-    public constructor(client: CommandoClient, private data: Data) {
-        super(client, {
-            name: 'setrole',
-            group: 'admin',
-            memberName: 'setrole',
-            description: 'Adds a new role reaction message to the specified channel',
-            args: [
-                { key: 'channel', type: 'text-channel', prompt: 'The channel in which the reaction message should be sent' },
-                { key: 'customEmoji', type: 'custom-emoji', prompt: 'The emote that can be reacted with to get the role' },
-                { key: 'role', type: 'role', prompt: 'The role to be given when reacting', default: '!!norole!!' }
-            ],
-            ownerOnly: true,
-            guildOnly: true
-        });
+
+    public name(): string {
+        return 'setRole';
     }
 
-    public run(message: CommandoMessage, { channel, customEmoji, role }): any {
-        const emoji: Emoji = customEmoji as Emoji;
-        const textChannel: TextChannel = channel as TextChannel;
+    public description(): string {
+        return 'Registers an emoji as a role reaction emoji in a specified channel';
+    }
 
-        if (this.data.hasEmoji(textChannel.id, emoji.id)) this.data.removeEmoji(textChannel.id, emoji.id);
+    public async permitted(member: GuildMember): Promise<boolean> {
+        return config.discord.admin.includes(member.id);
+    }
+
+    public async handle(message: Message, args: Array<string>): Promise<void> {
+        const [ roleArgument, channelArgument, emojiArgument ] = args;
+
+        const role: Role = await RoleArgument.parse(message, roleArgument);
+        const channel: Channel = await ChannelArgument.parse(message, channelArgument);
+        const emoji: string | Emoji = await EmojiArgument.parse(message, emojiArgument);
+
+        const emojiId: string = typeof emoji === 'string' ? emoji : emoji.id;
+
+        data.addEmoji(channel.id, emojiId, role.id);
 
         message.react('👌');
-
-        if (role === '!!norole!!') return;
-
-        this.data.addEmoji(textChannel.id, emoji.id, role.id);
     }
 }

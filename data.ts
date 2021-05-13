@@ -21,6 +21,10 @@ export class Data {
         return this.entries.filter(entry => entry.channel === channel).length !== 0;
     }
 
+    public getChannel(channel: string): Array<Entry> {
+        return this.entries.filter(entry => entry.channel === channel);
+    }
+
     public hasEmoji(channel: string, emoji: string): boolean {
         return this.entries.filter(entry => entry.channel === channel && entry.emoji === emoji).length !== 0;
     }

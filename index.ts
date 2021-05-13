@@ -4,16 +4,22 @@ import { ArgumentError } from './argument/argumentError';
 import { Command } from './command';
 import { Config } from './config';
 import { Data } from './data';
+import { GetRolesCommand } from './getRolesCommand';
 import { SetRoleCommand } from './setRoleCommand';
-import { SetRoleDefaultCommand } from './setRoleDefaultCommand';
-import { WikiCommand } from './wikicommand';
+import { WikiCommand } from './wikiCommand';
 
-const config: Config = JSON.parse(files.readFileSync('config.json').toString());
-const data: Data = new Data();
-const client = new CommandoClient(config.discord.options);
+export const config: Config = JSON.parse(files.readFileSync('config.json').toString());
+export const data: Data = new Data();
+export const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
 (async () => {
     await client.login(config.discord.token);
+
+    const commands: Array<Command> = [
+        new SetRoleCommand(),
+        new GetRolesCommand(),
+        new WikiCommand()
+    ];
 
     client.user.setActivity({
         type: 'WATCHING',
