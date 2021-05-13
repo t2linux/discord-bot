@@ -3,6 +3,7 @@ import * as files from 'fs';
 import { ArgumentError } from './argumentError';
 import { Command } from './command';
 import { GetRolesCommand } from './commands/getRolesCommand';
+import { HelpCommand } from './commands/helpCommand';
 import { RemoveRoleCommand } from './commands/removeRoleCommand';
 import { SetRoleCommand } from './commands/setRoleCommand';
 import { WikiCommand } from './commands/wikiCommand';

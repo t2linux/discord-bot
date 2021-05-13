@@ -1,6 +1,6 @@
 import * as files from 'fs';
 
-interface Entry {
+export interface Entry {
     channel: string;
     emoji: string;
     role: string;
@@ -37,6 +37,10 @@ export class Data {
         this.entries = this.entries.filter(entry => !(entry.channel === channel && entry.emoji === emoji));
 
         files.writeFileSync('data.json', JSON.stringify(this.entries));
+    }
+
+    public get(): Array<Entry> {
+        return this.entries;
     }
 
     public addEmoji(channel: string, emoji: string, role: string): void {
