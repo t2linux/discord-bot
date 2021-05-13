@@ -1,4 +1,4 @@
-import { Client, Guild, GuildChannel, GuildMember } from 'discord.js';
+import { Client, Guild, GuildChannel, GuildMember, Message, MessageReaction, PartialUser, User } from 'discord.js';
 import * as files from 'fs';
 import { ArgumentError } from './argument/argumentError';
 import { Command } from './command';
@@ -50,57 +50,44 @@ export const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] 
         }
     });
 
-    // requires the use of raw events to get the member 'user_id'
-    // @ts-ignore
-    client.on('raw', async event => {
-        if (event.t === 'MESSAGE_REACTION_ADD') {
-            if (event.d.user_id === client.user.id) return;
+    const processReactionEvent = async (reaction: MessageReaction, user: User | PartialUser, callback: (member: GuildMember, role: string) => void) => {
+        const message: Message = await reaction.message.fetch();
 
-            if (data.hasChannel(event.d.channel_id)) {
-                let identifier: string;
+        if (reaction.partial) reaction = await reaction.fetch();
 
-                if (data.hasEmoji(event.d.channel_id, event.d.emoji.id))
-                    identifier = event.d.emoji.id;
+        if (user.id === client.user.id) return;
 
-                if (data.hasEmoji(event.d.channel_id, event.d.emoji.name))
-                    identifier = event.d.emoji.name;
+        if (data.hasChannel(message.channel.id)) {
+            let identifier: string;
 
-                if (!identifier)
-                    return;
+            if (data.hasEmoji(message.channel.id, reaction.emoji.id))
+                identifier = reaction.emoji.id;
 
-                const guild: Guild = (await client.channels.fetch(event.d.channel_id) as GuildChannel).guild;
-                const member: GuildMember = await guild.members.fetch(event.d.user_id);
-                const role: string = data.getRole(event.d.channel_id, identifier);
+            if (data.hasEmoji(message.channel.id, reaction.emoji.name))
+                identifier = reaction.emoji.name;
 
-                console.log('Roles: ' + member.user.tag + ' added role ' + role);
+            if (!identifier)
+                return;
 
-                member.roles.add(role);
-            }
-        } else if (event.t === 'MESSAGE_REACTION_REMOVE') {
-            if (event.d.user_id === client.user.id) return;
+            const guild: Guild = (await client.channels.fetch(message.channel.id) as GuildChannel).guild;
+            const member: GuildMember = await guild.members.fetch(user.id);
+            const role: string = data.getRole(message.channel.id, identifier);
 
-            if (data.hasChannel(event.d.channel_id)) {
-                let identifier: string;
-
-                if (data.hasEmoji(event.d.channel_id, event.d.emoji.id))
-                    identifier = event.d.emoji.id;
-
-                if (data.hasEmoji(event.d.channel_id, event.d.emoji.name))
-                    identifier = event.d.emoji.name;
-
-                if (!identifier)
-                    return;
-
-                const guild: Guild = (await client.channels.fetch(event.d.channel_id) as GuildChannel).guild;
-                const member: GuildMember = await guild.members.fetch(event.d.user_id);
-                const role: string = data.getRole(event.d.channel_id, identifier);
-
-                console.log('Roles: ' + member.user.tag + ' removed role ' + role);
-
-                member.roles.remove(role);
-            }
+            callback(member, role);
         }
-    });
+    };
+
+    client.on('messageReactionAdd', async (reaction: MessageReaction, user: User | PartialUser) => processReactionEvent(reaction, user, (member, role) => {
+        console.log('Roles: ' + user.tag + ' added role ' + role);
+
+        member.roles.add(role);
+    }));
+
+    client.on('messageReactionRemove', async (reaction: MessageReaction, user: User | PartialUser) => processReactionEvent(reaction, user, (member, role) => {
+        console.log('Roles: ' + member.user.tag + ' removed role ' + role);
+
+        member.roles.remove(role);
+    }));
 
     console.log('Discord: Logged in as ' + client.user.tag);
 })();
