@@ -1,7 +1,7 @@
 import { Channel, GuildMember, Message } from 'discord.js';
-import { config, data } from '.';
-import { ChannelArgument } from './argument/channelArgument';
-import { Command } from './command';
+import { config, data } from '..';
+import { ChannelArgument } from '../argument/channelArgument';
+import { Command } from '../command';
 
 export class GetRolesCommand extends Command {
 

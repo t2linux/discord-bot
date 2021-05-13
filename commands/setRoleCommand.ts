@@ -1,9 +1,9 @@
 import { Channel, Emoji, GuildMember, Message, Role } from 'discord.js';
-import { config, data } from '.';
-import { ChannelArgument } from './argument/channelArgument';
-import { EmojiArgument } from './argument/emojiArgument';
-import { RoleArgument } from './argument/roleArgument';
-import { Command } from './command';
+import { config, data } from '..';
+import { ChannelArgument } from '../argument/channelArgument';
+import { EmojiArgument } from '../argument/emojiArgument';
+import { RoleArgument } from '../argument/roleArgument';
+import { Command } from '../command';
 
 export class SetRoleCommand extends Command {
 

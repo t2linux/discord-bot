@@ -2,12 +2,12 @@ import { Client, Guild, GuildChannel, GuildMember } from 'discord.js';
 import * as files from 'fs';
 import { ArgumentError } from './argument/argumentError';
 import { Command } from './command';
+import { GetRolesCommand } from './commands/getRolesCommand';
+import { RemoveRoleCommand } from './commands/removeRoleCommand';
+import { SetRoleCommand } from './commands/setRoleCommand';
+import { WikiCommand } from './commands/wikiCommand';
 import { Config } from './config';
 import { Data } from './data';
-import { GetRolesCommand } from './getRolesCommand';
-import { RemoveRoleCommand } from './removeRoleCommand';
-import { SetRoleCommand } from './setRoleCommand';
-import { WikiCommand } from './wikiCommand';
 
 export const config: Config = JSON.parse(files.readFileSync('config.json').toString());
 export const data: Data = new Data();

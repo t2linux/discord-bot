@@ -1,5 +1,5 @@
 import { GuildMember, Message, MessageEmbed } from 'discord.js';
-import { Command } from './command';
+import { Command } from '../command';
 
 export class WikiCommand extends Command {
 
