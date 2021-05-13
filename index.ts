@@ -1,6 +1,6 @@
 import { Client, Guild, GuildChannel, GuildMember, Message, MessageReaction, PartialUser, User } from 'discord.js';
 import * as files from 'fs';
-import { ArgumentError } from './argumentError';
+import { CommandError } from './commandError';
 import { Command } from './command';
 import { GetRolesCommand } from './commands/getRolesCommand';
 import { HelpCommand } from './commands/helpCommand';
@@ -41,7 +41,7 @@ export const commands: Array<Command> = [
             for (const command of commands) {
                 if (command.name().toLowerCase() === args[0].toLowerCase()) {
                     return command.handle(message, args.slice(1)).catch(error => {
-                        if (error instanceof ArgumentError)
+                        if (error instanceof CommandError)
                             return message.channel.send(error.content);
 
                         message.channel.send('An error occured: ' + error);
