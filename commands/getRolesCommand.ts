@@ -1,5 +1,6 @@
 import { Channel, GuildMember, Message } from 'discord.js';
 import { config, data } from '..';
+import { Argument } from '../argument';
 import { ChannelArgument } from '../argument/channelArgument';
 import { Command } from '../command';
 
@@ -11,6 +12,12 @@ export class GetRolesCommand extends Command {
 
     public description(): string {
         return 'Lists all role reaction emojis of a channel';
+    }
+
+    public arguments(): Array<Argument> {
+        return [
+            { name: 'channel', type: 'Channel', description: 'The channel of which the role reaction emojis should be listed' }
+        ];
     }
 
     public async permitted(member: GuildMember): Promise<boolean> {

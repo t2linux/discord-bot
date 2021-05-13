@@ -1,4 +1,6 @@
 import { GuildMember, Message, MessageEmbed } from 'discord.js';
+import { primaryColor } from '..';
+import { Argument } from '../argument';
 import { Command } from '../command';
 
 export class WikiCommand extends Command {
@@ -24,6 +26,12 @@ export class WikiCommand extends Command {
 
     public description(): string {
         return 'Sends the link to a given wiki article';
+    }
+
+    public arguments(): Array<Argument> {
+        return [
+            { name: 'name', type: '"list" | ...string', description: 'The name of the article to be linked' }
+        ];
     }
 
     public async permitted(member: GuildMember): Promise<boolean> {

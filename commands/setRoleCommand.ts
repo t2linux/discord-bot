@@ -1,5 +1,6 @@
 import { Channel, Emoji, GuildMember, Message, Role } from 'discord.js';
 import { config, data } from '..';
+import { Argument } from '../argument';
 import { ChannelArgument } from '../argument/channelArgument';
 import { EmojiArgument } from '../argument/emojiArgument';
 import { RoleArgument } from '../argument/roleArgument';
@@ -13,6 +14,14 @@ export class SetRoleCommand extends Command {
 
     public description(): string {
         return 'Registers an emoji as a role reaction emoji in a specified channel';
+    }
+
+    public arguments(): Array<Argument> {
+        return [
+            { name: 'role', type: 'Role', description: 'The role of the role reaction emoji to be registerd' },
+            { name: 'channel', type: 'Channel', description: 'The channel in which the role reaction emoji should be registered' },
+            { name: 'emoji', type: 'CustomEmoji | UnicodeEmoji', description: 'The emoji of the role reaction emoji to be registered' }
+        ];
     }
 
     public async permitted(member: GuildMember): Promise<boolean> {
