@@ -7,17 +7,22 @@ export class CommandError extends Error {
         super();
     }
 
-    public static syntax(commandName: string, message: string): CommandError {
+    private static error(prefix: string, commandName: string, message: string): CommandError {
         return new CommandError(new MessageEmbed()
             .setColor(Color.red)
             .setTitle(commandName)
-            .setDescription('SyntaxError: ' + message));
+            .setDescription(`${prefix}: ${message}`));
+    }
+
+    public static syntax(commandName: string, message: string): CommandError {
+        return this.error('SyntaxError', commandName, message);
+    }
+
+    public static semantic(commandName: string, message: string): CommandError {
+        return this.error('SemanticError', commandName, message);
     }
 
     public static generic(commandName: string, message: string): CommandError {
-        return new CommandError(new MessageEmbed()
-            .setColor(Color.red)
-            .setTitle(commandName)
-            .setDescription('Error: ' + message));
+        return this.error('Error', commandName, message);
     }
 }
