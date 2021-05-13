@@ -13,7 +13,7 @@ export class SetRoleCommand extends Command {
     }
 
     public description(): string {
-        return 'Registers an emoji as a role reaction emoji in a specified channel';
+        return 'Registers or replaces an emoji as a role reaction emoji in a specified channel';
     }
 
     public arguments(): Array<Argument> {
@@ -36,6 +36,9 @@ export class SetRoleCommand extends Command {
         const emoji: string | Emoji = await EmojiArgument.parse(message, emojiArgument);
 
         const emojiId: string = typeof emoji === 'string' ? emoji : emoji.id;
+
+        if (data.hasEmoji(channel.id, emojiId))
+            data.removeEmoji(channel.id, emojiId);
 
         data.addEmoji(channel.id, emojiId, role.id);
 
