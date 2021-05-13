@@ -1,7 +1,7 @@
 import { Client, Guild, GuildChannel, GuildMember, Message, MessageReaction, PartialUser, User } from 'discord.js';
 import * as files from 'fs';
-import { CommandError } from './commandError';
 import { Command } from './command';
+import { CommandError } from './commandError';
 import { GetRolesCommand } from './commands/getRolesCommand';
 import { HelpCommand } from './commands/helpCommand';
 import { RemoveRoleCommand } from './commands/removeRoleCommand';
@@ -29,8 +29,8 @@ export const commands: Array<Command> = [
         name: 'wiki.t2linux.org'
     });
 
-    client.on('message', message => {
-        if (message.author.bot)
+    client.on('message', async message => {
+        if (message.author.bot || !message.member)
             return;
 
         const content: string = message.content;
@@ -40,6 +40,9 @@ export const commands: Array<Command> = [
 
             for (const command of commands) {
                 if (command.name().toLowerCase() === args[0].toLowerCase()) {
+                    if (!await command.permitted(message.member))
+                        return message.channel.send(CommandError.generic(command.name(), 'Insufficient permission').content);
+
                     return command.handle(message, args.slice(1)).catch(error => {
                         if (error instanceof CommandError)
                             return message.channel.send(error.content);
