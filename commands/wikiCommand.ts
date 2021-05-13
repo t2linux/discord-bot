@@ -31,7 +31,7 @@ export class WikiCommand extends Command {
 
     public arguments(): Array<Argument> {
         return [
-            { name: 'name', type: '"list" | ...string', description: 'The name of the article to be linked' }
+            { name: 'name', type: '"list" | [...]article name[...]', description: 'The name of the article to be linked' }
         ];
     }
 
@@ -43,41 +43,48 @@ export class WikiCommand extends Command {
         if (args[0] === 'list') {
             const embed = new MessageEmbed()
                 .setColor(Color.primary)
-                .setDescription('List of articles for ".wiki <article>"')
-                .setFooter('Use ".wiki list" to show this message');
+                .setDescription('List of articles for .wiki');
 
             Array.from(WikiCommand.articles.entries()).forEach(entry => embed.addField(entry[0].join(', '), entry[1], true));
 
             message.channel.send(embed);
         } else {
-            let found: { name: string, url: string } = null;
+            const found: Array<{ name: string, url: string }> = new Array<{ name: string, url: string }>();
 
-            for (const keys of WikiCommand.articles.keys()) {
-                for (const key of keys) {
-                    const words: Array<string> = key.split(' ');
+            for (let i = 0; i < args.length; i++) {
+                const argument: Array<string> = args.slice(i);
 
-                    let matchesWords: boolean = true;
+                for (const keys of WikiCommand.articles.keys()) {
+                    for (const key of keys) {
+                        const words: Array<string> = key.split(' ');
 
-                    for (let i = 0; i < words.length; i++) {
-                        if (args[i].toLowerCase() !== words[i].toLowerCase()) {
-                            matchesWords = false;
+                        let matchesWords: boolean = true;
 
-                            break;
+                        for (let i = 0; i < words.length; i++) {
+                            if (argument[i].toLowerCase() !== words[i].toLowerCase()) {
+                                matchesWords = false;
+
+                                break;
+                            }
                         }
-                    }
 
-                    if (matchesWords)
-                        found = { name: key, url: WikiCommand.articles.get(keys) };
+                        if (matchesWords)
+                            found.push({ name: key, url: WikiCommand.articles.get(keys) });
+                    }
                 }
             }
 
+            if (found.length === 0)
+                throw CommandError.generic('WikiCommand', 'The message did not contain any article names, use `.wiki list` to see all articles');
 
-            if (found === null)
-                throw CommandError.generic('WikiCommand', 'Article not found, use `.wiki list` for a full list');
+            const embed: MessageEmbed = new MessageEmbed()
+                .setColor(Color.primary)
+                .setFooter('Use ".wiki list" for all articles');
 
-            message.channel.send(new MessageEmbed()
-                .setColor(Color.red)
-                .setDescription('Article not found, use ".wiki list" for help'));
+            for (const entry of found)
+                embed.addField(entry.name, entry.url, true);
+
+            message.channel.send(embed);
         }
     }
 }
