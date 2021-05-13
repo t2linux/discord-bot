@@ -41,7 +41,7 @@ export const commands: Array<Command> = [
             for (const command of commands) {
                 if (command.name().toLowerCase() === args[0].toLowerCase()) {
                     if (!await command.permitted(message.member))
-                        return message.channel.send(CommandError.generic(command.name(), 'Insufficient permission').content);
+                        return message.channel.send(CommandError.generic(command.constructor.name, 'Insufficient permission').content);
 
                     return command.handle(message, args.slice(1)).catch(error => {
                         if (error instanceof CommandError)

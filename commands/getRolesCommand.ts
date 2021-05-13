@@ -31,10 +31,10 @@ export class GetRolesCommand extends Command {
         const channel: Channel = await ChannelArgument.parse(message, channelArgument);
 
         if (!data.hasChannel(channel.id))
-            throw CommandError.generic('GetRoles', 'The specified channel has no emojis stored');
+            throw CommandError.generic('GetRolesCommand', 'The specified channel has no emojis stored');
 
         message.channel.send(new MessageEmbed()
-            .setTitle('GetRoles')
+            .setTitle('GetRolesCommand')
             .setDescription(data.getChannel(channel.id).map(entry => `${entry.emoji} => ${entry.role}`).join('\n')));
     }
 }
