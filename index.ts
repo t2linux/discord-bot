@@ -1,6 +1,7 @@
-import { Guild, GuildChannel, GuildMember } from 'discord.js';
-import { CommandoClient } from 'discord.js-commando';
+import { Client, Guild, GuildChannel, GuildMember } from 'discord.js';
 import * as files from 'fs';
+import { ArgumentError } from './argument/argumentError';
+import { Command } from './command';
 import { Config } from './config';
 import { Data } from './data';
 import { SetRoleCommand } from './setRoleCommand';
@@ -19,13 +20,27 @@ const client = new CommandoClient(config.discord.options);
         name: 'wiki.t2linux.org'
     });
 
-    client.registry
-        .registerDefaultTypes()
-        .registerGroup('admin', 'Administration commands')
-        .registerGroup('user', 'User commands')
-        .registerCommand(new SetRoleCommand(client, data))
-        .registerCommand(new SetRoleDefaultCommand(client, data))
-        .registerCommand(new WikiCommand(client, data));
+    client.on('message', message => {
+        if (message.author.bot)
+            return;
+
+        const content: string = message.content;
+
+        if (content.startsWith(config.discord.commandPrefix)) {
+            const args: Array<string> = content.substring(1).split(' ').filter(argument => argument.trim() !== '');
+
+            for (const command of commands) {
+                if (command.name().toLowerCase() === args[0].toLowerCase()) {
+                    return command.handle(message, args.slice(1)).catch(error => {
+                        if (error instanceof ArgumentError)
+                            return message.channel.send(error.content);
+
+                        message.channel.send('An error occured: ' + error);
+                    });
+                }
+            }
+        }
+    });
 
     // requires the use of raw events to get the member 'user_id'
     // @ts-ignore
