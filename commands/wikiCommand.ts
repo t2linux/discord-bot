@@ -41,7 +41,7 @@ export class WikiCommand extends Command {
     public async handle(message: Message, args: Array<string>): Promise<void> {
         if (args[0] === 'list') {
             const embed = new MessageEmbed()
-                .setColor('#7663E8')
+                .setColor(primaryColor)
                 .setDescription('List of articles for ".wiki <article>"')
                 .setFooter('Use ".wiki list" to show this message');
 
@@ -73,7 +73,7 @@ export class WikiCommand extends Command {
 
             if (found !== null) {
                 message.channel.send(new MessageEmbed()
-                    .setColor('#7663E8')
+                    .setColor(primaryColor)
                     .addField(found.name, found.url, true)
                     .setFooter('Use ".wiki list" for all articles'));
 
@@ -81,7 +81,7 @@ export class WikiCommand extends Command {
             }
 
             message.channel.send(new MessageEmbed()
-                .setColor('#7663E8')
+                .setColor(primaryColor)
                 .setDescription('Article not found, use ".wiki list" for help'));
         }
     }
