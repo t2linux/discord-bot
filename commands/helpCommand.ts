@@ -2,6 +2,7 @@ import { GuildMember, Message } from 'discord.js';
 import { commands } from '..';
 import { Argument } from '../argument';
 import { Command } from '../command';
+import { CommandError } from '../commandError';
 
 export class HelpCommand extends Command {
 
@@ -34,6 +35,6 @@ export class HelpCommand extends Command {
             }
         }
 
-        message.channel.send('Command not found');
+        throw CommandError.generic('HelpCommand', 'Command not found');
     }
 }

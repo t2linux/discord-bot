@@ -1,8 +1,9 @@
-import { Channel, GuildMember, Message } from 'discord.js';
+import { Channel, GuildMember, Message, MessageEmbed } from 'discord.js';
 import { config, data } from '..';
 import { Argument } from '../argument';
 import { ChannelArgument } from '../arguments/channelArgument';
 import { Command } from '../command';
+import { CommandError } from '../commandError';
 
 export class GetRolesCommand extends Command {
 
@@ -29,12 +30,11 @@ export class GetRolesCommand extends Command {
 
         const channel: Channel = await ChannelArgument.parse(message, channelArgument);
 
-        if (!data.hasChannel(channel.id)) {
-            message.channel.send('The specified channel has no emojis stored');
+        if (!data.hasChannel(channel.id))
+            throw CommandError.generic('GetRoles', 'The specified channel has no emojis stored');
 
-            return;
-        }
-
-        message.channel.send(data.getChannel(channel.id).map(entry => `${entry.emoji} => ${entry.role}`).join('\n'));
+        message.channel.send(new MessageEmbed()
+            .setTitle('GetRoles')
+            .setDescription(data.getChannel(channel.id).map(entry => `${entry.emoji} => ${entry.role}`).join('\n')));
     }
 }

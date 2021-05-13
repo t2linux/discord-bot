@@ -2,6 +2,7 @@ import { GuildMember, Message, MessageEmbed } from 'discord.js';
 import { Argument } from '../argument';
 import { Color } from '../color';
 import { Command } from '../command';
+import { CommandError } from '../commandError';
 
 export class WikiCommand extends Command {
 
@@ -71,14 +72,8 @@ export class WikiCommand extends Command {
             }
 
 
-            if (found !== null) {
-                message.channel.send(new MessageEmbed()
-                    .setColor(Color.primary)
-                    .addField(found.name, found.url, true)
-                    .setFooter('Use ".wiki list" for all articles'));
-
-                return;
-            }
+            if (found === null)
+                throw CommandError.generic('WikiCommand', 'Article not found, use `.wiki list` for a full list');
 
             message.channel.send(new MessageEmbed()
                 .setColor(Color.red)

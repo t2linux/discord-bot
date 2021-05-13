@@ -13,4 +13,11 @@ export class CommandError extends Error {
             .setTitle(commandName)
             .setDescription('SyntaxError: ' + message));
     }
+
+    public static generic(commandName: string, message: string): CommandError {
+        return new CommandError(new MessageEmbed()
+            .setColor(Color.red)
+            .setTitle(commandName)
+            .setDescription('Error: ' + message));
+    }
 }
