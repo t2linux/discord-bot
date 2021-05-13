@@ -9,11 +9,17 @@ export class SnowflakeBasedArgument extends RegexBasedArgument {
             throw CommandError.syntax(name, 'No input provided');
 
         const match: RegExpMatchArray = this.regex(name, new RegExp(`^<${prefix}(\\d*)>$`), input);
-        const parsed: DeconstructedSnowflake = SnowflakeUtil.deconstruct(match[1]);
+        const { valid, parsed } = this.validateSnowflake(match[1]);
 
-        if (parsed.timestamp < SnowflakeUtil.EPOCH)
+        if (!valid)
             throw CommandError.syntax(name, `Expected snowflake but got ${match[1].replaceAll('`', '')} instead`);
 
         return { parsed, plain: match[1] };
+    }
+
+    protected static validateSnowflake(snowflake: string): { valid: boolean, parsed: DeconstructedSnowflake } {
+        const parsed: DeconstructedSnowflake = SnowflakeUtil.deconstruct(snowflake);
+
+        return { valid: parsed.timestamp > SnowflakeUtil.EPOCH && !isNaN(parsed.date.valueOf()), parsed };
     }
 }
