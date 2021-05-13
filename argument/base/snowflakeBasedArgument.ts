@@ -1,5 +1,5 @@
 import { DeconstructedSnowflake, Snowflake, SnowflakeUtil } from 'discord.js';
-import { ArgumentError } from '../argumentError';
+import { ArgumentError } from '../../argumentError';
 import { RegexBasedArgument } from './regexBasedArgument';
 
 export class SnowflakeBasedArgument extends RegexBasedArgument {

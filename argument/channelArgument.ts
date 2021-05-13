@@ -1,6 +1,6 @@
 import { Channel, Message } from 'discord.js';
 import { client } from '..';
-import { ArgumentError } from './argumentError';
+import { ArgumentError } from '../argumentError';
 import { SnowflakeBasedArgument } from './base/snowflakeBasedArgument';
 
 export class ChannelArgument extends SnowflakeBasedArgument {

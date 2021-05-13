@@ -1,5 +1,5 @@
 import { Message, Role } from 'discord.js';
-import { ArgumentError } from './argumentError';
+import { ArgumentError } from '../argumentError';
 import { SnowflakeBasedArgument } from './base/snowflakeBasedArgument';
 
 export class RoleArgument extends SnowflakeBasedArgument {

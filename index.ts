@@ -1,6 +1,6 @@
 import { Client, Guild, GuildChannel, GuildMember, Message, MessageReaction, PartialUser, User } from 'discord.js';
 import * as files from 'fs';
-import { ArgumentError } from './argument/argumentError';
+import { ArgumentError } from './argumentError';
 import { Command } from './command';
 import { GetRolesCommand } from './commands/getRolesCommand';
 import { RemoveRoleCommand } from './commands/removeRoleCommand';

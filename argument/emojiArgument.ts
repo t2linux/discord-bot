@@ -1,6 +1,6 @@
 import { DeconstructedSnowflake, Emoji, Message, SnowflakeUtil } from 'discord.js';
 import * as emoji from 'node-emoji';
-import { ArgumentError } from './argumentError';
+import { ArgumentError } from '../argumentError';
 import { RegexBasedArgument } from './base/regexBasedArgument';
 
 export type EmojiType = 'all' | 'unicode' | 'custom';
