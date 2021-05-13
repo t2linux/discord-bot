@@ -8,7 +8,7 @@ export class RoleArgument extends SnowflakeBasedArgument {
         if (!input)
             throw CommandError.syntax('RoleArgument', 'No input provided');
 
-        const { plain } = this.snowflake('RoleArgument', '@&', input);
+        const { plain } = this.snowflake('RoleArgument', '@[&|!]', input);
 
         return await message.guild.roles.fetch(plain);
     }
