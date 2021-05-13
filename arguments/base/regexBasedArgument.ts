@@ -9,7 +9,7 @@ export class RegexBasedArgument {
         const match: RegExpMatchArray | null = input.match(pattern);
 
         if (!match)
-            throw CommandError.syntax(name, `Expected \`${pattern}\` but got \`${input.replaceAll('`', '')}\` instead)`);
+            throw CommandError.syntax(name, `Expected \`${pattern}\` but got \`${input.replaceAll('`', '')}\` instead`);
 
         return match;
     }
