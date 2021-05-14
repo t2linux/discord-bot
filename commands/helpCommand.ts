@@ -2,7 +2,6 @@ import { GuildMember, Message } from 'discord.js';
 import { commands } from '..';
 import { Argument } from '../argument';
 import { Command } from '../command';
-import { CommandError } from '../commandError';
 
 export class HelpCommand extends Command {
 
@@ -27,6 +26,12 @@ export class HelpCommand extends Command {
     public async handle(message: Message, args: Array<string>): Promise<void> {
         const [ commandName ] = args;
 
+        if (!commandName) {
+            message.channel.send(this.help());
+
+            return;
+        }
+
         for (const command of commands) {
             if (command.name().toLowerCase() === commandName.toLowerCase()) {
                 message.channel.send(command.help());
@@ -34,7 +39,5 @@ export class HelpCommand extends Command {
                 return;
             }
         }
-
-        throw CommandError.generic('HelpCommand', 'Command not found');
     }
 }
