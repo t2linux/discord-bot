@@ -7,7 +7,7 @@ export type EmojiType = 'all' | 'unicode' | 'custom';
 
 export class EmojiArgument extends RegexBasedArgument {
 
-    private static readonly regionalIndicators: Map<string, string> = new Map<string, string>([
+    public static readonly regionalIndicators: Map<string, string> = new Map<string, string>([
         ['🇦', ':regional_indicator_a:'],
         ['🇧', ':regional_indicator_b:'],
         ['🇨', ':regional_indicator_c:'],

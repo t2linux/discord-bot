@@ -9,6 +9,8 @@ import { SetRoleCommand } from './commands/setRoleCommand';
 import { WikiCommand } from './commands/wikiCommand';
 import { Config } from './config';
 import { Data } from './data';
+import * as emoji from 'node-emoji';
+import { EmojiArgument } from './arguments/emojiArgument';
 
 export const config: Config = JSON.parse(files.readFileSync('config.json').toString());
 export const data: Data = new Data();
@@ -63,6 +65,12 @@ export const commands: Array<Command> = [
 
         if (data.hasChannel(message.channel.id)) {
             let identifier: string;
+
+            if (emoji.hasEmoji(reaction.emoji.name))
+                identifier = emoji.unemojify(reaction.emoji.name);
+
+            if (EmojiArgument.regionalIndicators.has(reaction.emoji.name))
+                identifier = EmojiArgument.regionalIndicators.get(reaction.emoji.name);
 
             if (data.hasEmoji(message.channel.id, reaction.emoji.id))
                 identifier = reaction.emoji.id;
