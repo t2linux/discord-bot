@@ -19,7 +19,8 @@ export class WikiCommand extends Command {
         [['manjaro'], 'https://wiki.t2linux.org/distributions/manjaro/installation/'],
         [['ubuntu'], 'https://wiki.t2linux.org/distributions/ubuntu/installation/'],
         [['uninstall'], 'https://wiki.t2linux.org/guides/uninstall/'],
-        [['kernel'], 'https://wiki.t2linux.org/guides/kernel/']
+        [['kernel'], 'https://wiki.t2linux.org/guides/kernel/'],
+        [['startup'], 'https://wiki.t2linux.org/guides/startup-manager/']
     ]);
 
     public name(): string {
