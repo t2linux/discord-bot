@@ -20,7 +20,8 @@ export class WikiCommand extends Command {
         [['ubuntu'], 'https://wiki.t2linux.org/distributions/ubuntu/installation/'],
         [['uninstall'], 'https://wiki.t2linux.org/guides/uninstall/'],
         [['kernel'], 'https://wiki.t2linux.org/guides/kernel/'],
-        [['startup'], 'https://wiki.t2linux.org/guides/startup-manager/']
+        [['startup'], 'https://wiki.t2linux.org/guides/startup-manager/'],
+        [['refind'], 'https://wiki.t2linux.org/guides/refind/']
     ]);
 
     public name(): string {
