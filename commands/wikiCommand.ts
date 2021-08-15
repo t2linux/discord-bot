@@ -21,7 +21,8 @@ export class WikiCommand extends Command {
         [['uninstall'], 'https://wiki.t2linux.org/guides/uninstall/'],
         [['kernel'], 'https://wiki.t2linux.org/guides/kernel/'],
         [['startup'], 'https://wiki.t2linux.org/guides/startup-manager/'],
-        [['refind'], 'https://wiki.t2linux.org/guides/refind/']
+        [['refind'], 'https://wiki.t2linux.org/guides/refind/'],
+        [['state'], 'https://wiki.t2linux.org/state/']
     ]);
 
     public name(): string {
