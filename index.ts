@@ -1,4 +1,4 @@
-import { Client, Guild, GuildChannel, GuildMember, Message, MessageReaction, PartialUser, User } from 'discord.js';
+import { ActivityOptions, Client, Guild, GuildChannel, GuildMember, Message, MessageReaction, PartialUser, User } from 'discord.js';
 import * as files from 'fs';
 import { Command } from './command';
 import { CommandError } from './commandError';
@@ -26,10 +26,14 @@ export const commands: Array<Command> = [
 (async () => {
     await client.login(config.discord.token);
 
-    client.user.setActivity({
+    const activity: ActivityOptions = {
         type: 'WATCHING',
         name: 'wiki.t2linux.org'
-    });
+    };
+
+    client.user.setActivity(activity);
+
+    setInterval(() => client.user.setActivity(activity), 60 * 60 * 1000);
 
     client.on('message', async message => {
         if (message.author.bot || !message.member)
