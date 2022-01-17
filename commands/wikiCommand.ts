@@ -18,6 +18,7 @@ export class WikiCommand extends Command {
         [['arch'], 'https://wiki.t2linux.org/distributions/arch/installation/'],
         [['fedora'], 'https://wiki.t2linux.org/distributions/fedora/installation/'],
         [['manjaro'], 'https://wiki.t2linux.org/distributions/manjaro/installation/'],
+        [['gentoo'], 'https://wiki.t2linux.org/distributions/gentoo/installation/'],
         [['ubuntu'], 'https://wiki.t2linux.org/distributions/ubuntu/installation/'],
         [['uninstall'], 'https://wiki.t2linux.org/guides/uninstall/'],
         [['kernel'], 'https://wiki.t2linux.org/guides/kernel/'],
