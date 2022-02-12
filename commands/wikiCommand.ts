@@ -9,6 +9,7 @@ export class WikiCommand extends Command {
     private static articles: Map<Array<string>, string> = new Map<Array<string>, string>([
         [['wiki', 'index'], 'https://wiki.t2linux.org/'],
         [['roadmap'], 'https://wiki.t2linux.org/roadmap/'],
+        [['contribute'], 'https://wiki.t2linux.org/contribute/'],
         [['wifi'], 'https://wiki.t2linux.org/guides/wifi/'],
         [['dkms', 'modules', 'drivers'], 'https://wiki.t2linux.org/guides/dkms/'],
         [['windows'], 'https://wiki.t2linux.org/guides/windows/'],
@@ -16,6 +17,7 @@ export class WikiCommand extends Command {
         [['hybrid graphics', 'igpu'], 'https://wiki.t2linux.org/guides/hybrid-graphics/'],
         [['fan'], 'https://wiki.t2linux.org/guides/fan/'],
         [['arch'], 'https://wiki.t2linux.org/distributions/arch/installation/'],
+        [['eos'], 'https://wiki.t2linux.org/distributions/endeavouros/installation/'],
         [['fedora'], 'https://wiki.t2linux.org/distributions/fedora/installation/'],
         [['manjaro'], 'https://wiki.t2linux.org/distributions/manjaro/installation/'],
         [['gentoo'], 'https://wiki.t2linux.org/distributions/gentoo/installation/'],
