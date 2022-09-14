@@ -10,7 +10,7 @@ export class WikiCommand extends Command {
         [['wiki', 'index'], 'https://wiki.t2linux.org/'],
         [['roadmap'], 'https://wiki.t2linux.org/roadmap/'],
         [['contribute'], 'https://wiki.t2linux.org/contribute/'],
-        [['wifi'], 'https://wiki.t2linux.org/guides/wifi/'],
+        [['wifi', 'bluetooth', 'firmware'], 'https://wiki.t2linux.org/guides/wifi-bluetooth/'],
         [['dkms', 'modules', 'drivers'], 'https://wiki.t2linux.org/guides/dkms/'],
         [['windows'], 'https://wiki.t2linux.org/guides/windows/'],
         [['audio'], 'https://wiki.t2linux.org/guides/audio-config/'],
