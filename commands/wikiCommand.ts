@@ -23,6 +23,7 @@ export class WikiCommand extends Command {
         [['manjaro'], 'https://wiki.t2linux.org/distributions/manjaro/installation/'],
         [['gentoo'], 'https://wiki.t2linux.org/distributions/gentoo/installation/'],
         [['ubuntu'], 'https://wiki.t2linux.org/distributions/ubuntu/installation/'],
+        [['debian', 'mint', 'kali', 'popos'], 'https://wiki.t2linux.org/distributions/debian/installation/'],
         [['uninstall'], 'https://wiki.t2linux.org/guides/uninstall/'],
         [['kernel'], 'https://wiki.t2linux.org/guides/kernel/'],
         [['startup'], 'https://wiki.t2linux.org/guides/startup-manager/'],
