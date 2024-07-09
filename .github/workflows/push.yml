@@ -1,0 +1,32 @@
+name: Build and push container
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build-container:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout latest commit
+              uses: actions/checkout@v2
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+            - name: Log into registry
+              run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            - name: Build and push container image
+              run: |
+                  REGISTRY="ghcr.io/${{ github.repository_owner }}"
+                  NAME="discord-bot"
+
+                  ID="$(echo $REGISTRY/$NAME | tr '[A-Z]' '[a-z]')"
+                  REF="$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')"
+
+                  [[ "${{ github.ref }}" == "refs/tags/"* ]] && REF=$(echo $REF | sed -e 's/^v//')
+
+                  [ "$REF" == "main" ] && REF=latest
+
+                  docker build . \
+                      --tag "$ID:$REF" \
+
+                  docker push "$ID:$REF"
